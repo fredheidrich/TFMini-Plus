@@ -177,7 +177,10 @@ class TFMPlus
     // for testing purposes, print frame or reply data and status
     void printStatus( bool isFrameData);
 
+    void setTimeout( uint32_t t);
+
   private:
+    uint32_t timeout = 1000;
     Stream* pStream;      // pointer to the device serial stream
     // The data buffers are one byte longer than necessary
     // because we read one byte into the last position, then shift

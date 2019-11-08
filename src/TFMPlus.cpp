@@ -94,7 +94,7 @@ bool TFMPlus::getData( uint16_t &dist, uint16_t &flux, uint16_t &temp)
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // Set timer to one second timeout if HEADER never appears
     // or serial data never becomes available.
-    uint32_t serialTimeout = millis() + 1000;
+    uint32_t serialTimeout = millis() + timeout;
     
     // Flush all but last frame of data from the serial buffer.
     while( (*pStream).available() > TFMP_FRAME_SIZE) (*pStream).read();
@@ -206,7 +206,7 @@ bool TFMPlus::sendCommand( uint32_t cmnd, uint32_t param)
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // Set a one second timer to timeout if HEADER never appears
     // or serial data never becomes available
-    uint32_t serialTimeout = millis() + 1000;
+    uint32_t serialTimeout = millis() + timeout;
 	  // Clear out the entire command reply data buffer
     memset( reply, 0, sizeof( reply));
     // Read one byte from the serial bufferr into the end of
@@ -310,4 +310,8 @@ void TFMPlus::printReply()
   {
     printf(" %02x", reply[ i]);
   }
+}
+
+void TFMPlus::setTimeout(uint32_t t) {
+  timeout = t;
 }
